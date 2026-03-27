@@ -1,0 +1,29 @@
+workflows:
+  ios-workflow:
+    name: iOS Build
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      groups:
+        - app_store_credentials
+      vars:
+        XCODE_PROJECT: "iosApp/iosApp.xcodeproj"
+        XCODE_SCHEME: "iosApp"
+    scripts:
+      - name: Install dependencies
+        script: |
+          pip install pyyaml
+      - name: Build iOS Framework
+        script: |
+          ./gradlew :composeApp:assembleDebugAppleFrameworkForXcode
+      - name: Xcode build
+        script: |
+          xcode-project build-ipa \
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - varlamovartem05@gmail.com # ваша почта со скриншота
