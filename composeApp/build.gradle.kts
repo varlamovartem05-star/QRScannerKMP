@@ -11,7 +11,6 @@ plugins {
 kotlin {
     androidTarget()
 
-    // Оставляем как было для iOS
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -19,6 +18,8 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            // ДОБАВЬТЕ ЭТУ СТРОКУ НИЖЕ:
+            freeCompilerArgs += listOf("-Xoverride-kanary-ios-min-target=16.0")
         }
     }
 
