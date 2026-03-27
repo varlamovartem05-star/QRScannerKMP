@@ -16,7 +16,7 @@ workflows:
       - name: Build iOS Framework
         script: |
           chmod +x gradlew
-          ./gradlew :composeApp:assembleIosArm64DebugFramework
+          ./gradlew :composeApp:assembleDebugAppleFrameworkForXcode
       - name: Xcode build
         script: |
           xcode-project build-ipa \
