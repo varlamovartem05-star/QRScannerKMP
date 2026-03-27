@@ -9,7 +9,11 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
 
     listOf(
         iosArm64(),
@@ -18,8 +22,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            // ДОБАВЬТЕ ЭТУ СТРОКУ НИЖЕ:
-            freeCompilerArgs += listOf("-Xoverride-kanary-ios-min-target=16.0")
+            freeCompilerArgs += listOf("-Xoverride-kanary-ios-min-target=12.0")
         }
     }
 
@@ -31,15 +34,6 @@ kotlin {
             implementation("androidx.camera:camera-lifecycle:1.3.0")
             implementation("androidx.camera:camera-view:1.3.0")
             implementation("com.google.mlkit:barcode-scanning:17.2.0")
-        }
-        commonMain.dependencies {
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
         }
     }
 }
