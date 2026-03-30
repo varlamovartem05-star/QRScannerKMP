@@ -15,6 +15,10 @@ kotlin {
         }
     }
 
+    // Создаем таргеты для iOS
+    iosArm64()
+    iosSimulatorArm64()
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -26,35 +30,35 @@ kotlin {
         }
     }
 
+    // Включаем автоматическое создание иерархии папок (включая iosMain)
+    applyDefaultHierarchyTemplate()
+
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3) // Включили Material 3
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-            }
+        // Общий код для всех платформ
+        commonMain.dependencies {
+            // Чтобы убрать ворчалки Gradle, пропишем библиотеки напрямую
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
         }
 
-        val androidMain by getting {
-            dependencies {
-                // Все Android-специфичные штуки должны лежать ТОЛЬКО тут!
-                val cameraVersion = "1.3.0"
-                implementation("androidx.camera:camera-core:$cameraVersion")
-                implementation("androidx.camera:camera-camera2:$cameraVersion")
-                implementation("androidx.camera:camera-lifecycle:$cameraVersion")
-                implementation("androidx.camera:camera-view:$cameraVersion")
-                implementation("com.google.mlkit:barcode-scanning:17.2.0")
-                implementation("androidx.compose.ui:ui:1.6.0")
-                implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.0")
-            }
+        // Код только для Android
+        androidMain.dependencies {
+            val cameraVersion = "1.3.0"
+            implementation("androidx.camera:camera-core:$cameraVersion")
+            implementation("androidx.camera:camera-camera2:$cameraVersion")
+            implementation("androidx.camera:camera-lifecycle:$cameraVersion")
+            implementation("androidx.camera:camera-view:$cameraVersion")
+            implementation("com.google.mlkit:barcode-scanning:17.2.0")
+            implementation("androidx.compose.ui:ui:1.6.0")
+            implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.0")
         }
 
-        val iosMain by getting {
-            dependencies {
-                // Здесь пусто, так как iOS использует нативный AVFoundation для камеры
-            }
+        // Код только для iOS (теперь ошибки не будет!)
+        iosMain.dependencies {
+            // Здесь пусто, но блок должен существовать
         }
     }
 }
@@ -86,9 +90,7 @@ android {
     }
 }
 
-// В самом низу оставляем ТОЛЬКО тулинг для превью Андроида
 dependencies {
     debugImplementation(libs.compose.uiTooling)
 }
-
 
