@@ -31,12 +31,33 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material3) // Вот тут добавили тройку!
+                implementation(compose.material3) // Включили Material 3
                 implementation(compose.ui)
                 implementation(compose.components.resources)
             }
         }
+
+        val androidMain by getting {
+            dependencies {
+                // Все Android-специфичные штуки должны лежать ТОЛЬКО тут!
+                val cameraVersion = "1.3.0"
+                implementation("androidx.camera:camera-core:$cameraVersion")
+                implementation("androidx.camera:camera-camera2:$cameraVersion")
+                implementation("androidx.camera:camera-lifecycle:$cameraVersion")
+                implementation("androidx.camera:camera-view:$cameraVersion")
+                implementation("com.google.mlkit:barcode-scanning:17.2.0")
+                implementation("androidx.compose.ui:ui:1.6.0")
+                implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.0")
+            }
+        }
+
+        val iosMain by getting {
+            dependencies {
+                // Здесь пусто, так как iOS использует нативный AVFoundation для камеры
+            }
+        }
     }
+}
 
 android {
     namespace = "com.example.qrscannermulti"
@@ -65,20 +86,9 @@ android {
     }
 }
 
+// В самом низу оставляем ТОЛЬКО тулинг для превью Андроида
 dependencies {
-    implementation("androidx.camera:camera-camera2:1.3.0")
-    implementation("androidx.camera:camera-lifecycle:1.3.0")
-    implementation("androidx.camera:camera-view:1.3.0")
     debugImplementation(libs.compose.uiTooling)
-    implementation("com.google.mlkit:barcode-scanning:17.2.0")
-    val cameraVersion = "1.3.0"
-    implementation("androidx.camera:camera-core:$cameraVersion")
-    implementation("androidx.camera:camera-camera2:$cameraVersion")
-    implementation("androidx.camera:camera-lifecycle:$cameraVersion")
-    implementation("androidx.camera:camera-view:$cameraVersion")
-    implementation("androidx.compose.ui:ui:1.6.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.0")
 }
-
 
 
