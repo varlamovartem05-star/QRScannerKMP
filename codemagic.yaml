@@ -19,9 +19,13 @@ workflows:
           ./gradlew tasks
       - name: Xcode build
         script: |
-          xcodebuild -project "$XCODE_PROJECT" 
-          -scheme "$XCODE_SCHEME" 
-          -configuration Debug -sdk iphoneos
+          xcodebuild -project "$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
+            -configuration Debug \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
