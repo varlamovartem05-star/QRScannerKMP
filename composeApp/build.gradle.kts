@@ -27,13 +27,14 @@ kotlin {
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.activity.compose)
-            implementation("androidx.camera:camera-camera2:1.3.0")
-            implementation("androidx.camera:camera-lifecycle:1.3.0")
-            implementation("androidx.camera:camera-view:1.3.0")
-            implementation("com.google.mlkit:barcode-scanning:17.2.0")
+        val commonMain by getting {
+            dependencies {
+                // Вот эти строки жизненно необходимы:
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
         }
     }
 }
