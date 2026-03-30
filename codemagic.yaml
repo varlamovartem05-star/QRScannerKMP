@@ -26,8 +26,22 @@ workflows:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY=""
+      
+      - name: Package to IPA
+        script: |
+          # 1. Создаем правильную структуру папок для iOS-пакета
+          mkdir -p Payload
+          
+          # 2. Находим собранный .app и копируем его в папку Payload
+          APP_PATH=$(find $HOME/Library/Developer/Xcode/DerivedData -name "*.app" | head -n 1)
+          cp -R "$APP_PATH" Payload/
+          
+          # 3. Архивируем всё это дело в .ipa
+          zip -r QRScannerMulti.ipa Payload
+          
     artifacts:
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/Products/Debug-iphoneos/*.app
+      # Теперь забираем и сохраняем готовый .ipa файл
+      - "*.ipa"
     publishing:
       email:
         recipients:
