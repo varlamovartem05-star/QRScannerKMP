@@ -16,7 +16,7 @@ workflows:
       - name: Build iOS Framework
         script: |
           chmod +x gradlew
-          ./gradlew assembleFramework
+          ./gradlew tasks
       - name: Xcode build
         script: |
           xcode-project build-ipa \
