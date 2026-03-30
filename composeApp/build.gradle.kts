@@ -31,13 +31,12 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3) // Вот тут добавили тройку!
                 implementation(compose.ui)
                 implementation(compose.components.resources)
             }
         }
-    } // Скобка закрытия sourceSets теперь на месте!
-}
+    }
 
 android {
     namespace = "com.example.qrscannermulti"
