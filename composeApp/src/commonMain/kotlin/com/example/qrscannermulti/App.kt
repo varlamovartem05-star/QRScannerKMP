@@ -1,4 +1,4 @@
-package com.example.qrscannermulti // УБЕДИТЕСЬ, ЧТО ЭТО ВАШ ПАКЕТ
+package com.example.qrscannermulti
 
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.MaterialTheme
