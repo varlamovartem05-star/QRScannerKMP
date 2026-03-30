@@ -2,8 +2,6 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
@@ -31,14 +29,14 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                // Вот эти строки жизненно необходимы:
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(compose.ui)
                 implementation(compose.components.resources)
+            }
         }
-    }
+    } // Скобка закрытия sourceSets теперь на месте!
 }
 
 android {
